@@ -1,29 +1,41 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+// import HelloWorld from "./components/HelloWorld.vue";
+// import TheWelcome from "./components/TheWelcome.vue";
+import NavbarItem from "./components/NavbarItem.vue";
+import TokenCard from "./components/TokenCard.vue";
+import InfoItem from "./components/InfoItem.vue";
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <NavbarItem />
+    <!--    <img-->
+    <!--      alt="Vue logo"-->
+    <!--      class="logo"-->
+    <!--      src="./assets/logo.svg"-->
+    <!--      width="125"-->
+    <!--      height="125"-->
+    <!--    />-->
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <!--    <div class="wrapper">-->
+    <!--      <HelloWorld msg="You did it!" />-->
+    <!--    </div>-->
   </header>
 
   <main>
-    <TheWelcome />
+    <token-card duration="30" apy="103,23" amount="100-299" />
+    <info-item text="To perform actions on the page, connect your wallet"/>
+    <!--    <TheWelcome />-->
   </main>
 </template>
 
 <style>
-@import './assets/base.css';
+@import "./assets/base.css";
 
 #app {
-  max-width: 1280px;
+  max-width: 1170px;
   margin: 0 auto;
-  padding: 2rem;
+  /*padding: 2rem;*/
 
   font-weight: normal;
 }
@@ -50,32 +62,32 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/*@media (min-width: 1024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+/*  #app {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*    padding: 0 2rem;*/
+/*  }*/
 
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+/*  header {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*    padding-right: calc(var(--section-gap) / 2);*/
+/*  }*/
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+/*  header .wrapper {*/
+/*    display: flex;*/
+/*    place-items: flex-start;*/
+/*    flex-wrap: wrap;*/
+/*  }*/
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-}
+/*  .logo {*/
+/*    margin: 0 2rem 0 0;*/
+/*  }*/
+/*}*/
 </style>
