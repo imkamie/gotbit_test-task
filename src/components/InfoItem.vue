@@ -32,7 +32,7 @@ defineProps({
 }
 
 .info::before {
-  content: url("public/Danger Circle.svg");
+  content: url("../assets/Danger Circle.svg");
   position: absolute;
   top: 22px;
 }
