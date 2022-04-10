@@ -1,26 +1,42 @@
 <template>
-  <div class="card">
+  <div v-if="!isConnected" class="card">
     <div class="duration">{{ duration }} Days</div>
     <div class="apy">APY: {{ apy }}%</div>
     <div class="amount">Amount: {{ amount }} TKN</div>
   </div>
+  <label v-else>
+    <input type="radio" name="test" />
+    <div class="card-radio">
+      <div class="duration">{{ duration }} Days</div>
+      <div class="apy">APY: {{ apy }}%</div>
+      <div class="amount">Amount: {{ amount }} TKN</div>
+    </div>
+  </label>
 </template>
 
-<script setup>
-defineProps({
-  duration: {
-    type: String,
-    required: true,
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  name: "TokenCardRadio",
+  computed: {
+    ...mapGetters(["isConnected"]),
   },
-  apy: {
-    type: String,
-    required: true,
+  props: {
+    duration: {
+      type: String,
+      required: true,
+    },
+    apy: {
+      type: String,
+      required: true,
+    },
+    amount: {
+      type: String,
+      required: true,
+    },
   },
-  amount: {
-    type: String,
-    required: true,
-  },
-});
+};
 </script>
 
 <style scoped>
@@ -32,6 +48,28 @@ defineProps({
   padding: 24px 28px 20px 28px;
   width: 330px;
   max-height: 163px;
+}
+
+[type="radio"] {
+  display: none;
+}
+
+[type="radio"]:checked + div {
+  background: #eff3f8;
+  box-shadow: none;
+}
+
+.card-radio {
+  background: #ffffff;
+  box-shadow: 0 16px 44px rgba(78, 102, 120, 0.1);
+  border-radius: 24px;
+  padding: 24px 28px 20px 28px;
+  width: 330px;
+  max-height: 163px;
+}
+
+.card-radio:hover {
+  cursor: pointer;
 }
 
 .duration {

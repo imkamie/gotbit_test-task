@@ -37,13 +37,10 @@
 <script>
 import ButtonItem from "./ButtonItem.vue";
 import {
-  clickConnectMetamask,
   clickConnectWalletConnect,
   connector,
 } from "../utils/connectWallet";
-// import { store } from "../store";
 import { mapActions } from "vuex";
-// import getWeb3 from "../utils/getWeb3";
 export default {
   name: "SelectPayment",
   components: { ButtonItem },
@@ -53,15 +50,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["SET_CONNECT"]),
+    ...mapActions(["connect"]),
     closePopup() {
       this.$emit("closePopup");
     },
     async connectWithMetamask() {
       await this.$store.dispatch("connect", 1);
-      // clickConnectMetamask();
       this.closePopup();
-      // this.SET_CONNECT();
     },
     async connectWithWalletconnect() {
       clickConnectWalletConnect();
@@ -78,8 +73,6 @@ export default {
         this.address = accounts[0];
       });
       this.closePopup();
-      // this.SET_CONNECT();
-      // this.SET_ADDRESS();
     },
   },
   mounted() {

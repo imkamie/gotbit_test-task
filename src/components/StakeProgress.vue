@@ -33,6 +33,7 @@
 <script>
 import ButtonItem from "./ButtonItem.vue";
 import TokenStaking from "./TokenStaking.vue";
+import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 
 export default {
@@ -44,8 +45,7 @@ export default {
   data() {
     return {
       isVisible: false,
-      contractLink:
-        "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C",
+      contractLink: redirectAddress,
     };
   },
   methods: {

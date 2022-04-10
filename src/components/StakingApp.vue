@@ -5,9 +5,9 @@
       <div v-if="isConnected" class="approved">Wallet approved</div>
     </div>
     <div class="token-cards">
-      <TokenCard amount="100 - 299" apy="103,23" duration="30" />
-      <TokenCard amount="100 - 299" apy="116,86" duration="90" />
-      <TokenCard amount="500 - 1000" apy="129,97" duration="150" />
+      <TokenCardRadio amount="100 - 299" apy="103,23" duration="30" />
+      <TokenCardRadio amount="100 - 299" apy="116,86" duration="90" />
+      <TokenCardRadio amount="500 - 1000" apy="129,97" duration="150" />
     </div>
     <InfoItem
       v-if="!isConnected"
@@ -36,24 +36,24 @@
 </template>
 
 <script>
-import TokenCard from "./TokenCard.vue";
+import TokenCardRadio from "./TokenCardRadio.vue";
 import InfoItem from "./InfoItem.vue";
 import ButtonItem from "./ButtonItem.vue";
 import SelectPayment from "./SelectPayment.vue";
+import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 export default {
   name: "stakingApp",
   components: {
     ButtonItem,
     InfoItem,
-    TokenCard,
+    TokenCardRadio,
     SelectPayment,
   },
   data() {
     return {
       isVisible: false,
-      contractLink:
-        "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C",
+      contractLink: redirectAddress,
     };
   },
   computed: {
