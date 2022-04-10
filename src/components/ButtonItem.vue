@@ -1,6 +1,6 @@
 <template>
   <button class="btn" @click="onClick" :class="className">
-    <img class="btn-icon" v-if="icon" :src="path" alt="Payment icon"/>
+    <img class="btn-icon" v-if="icon" :src="path" alt="Payment icon" />
     <ClipLoader v-if="loading" />
     <div v-if="loading">Waiting</div>
     <div v-else>{{ text }}</div>

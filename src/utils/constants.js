@@ -1,4 +1,5 @@
-const redirectAddress = "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
+const redirectAddress =
+  "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
 const address = "0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
 const ABI = [
   {
