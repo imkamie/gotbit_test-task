@@ -9,7 +9,10 @@
       <TokenCard amount="100 - 299" apy="116,86" duration="90" />
       <TokenCard amount="500 - 1000" apy="129,97" duration="150" />
     </div>
-    <InfoItem text="To perform actions on the page, connect your wallet" />
+    <InfoItem
+      v-if="!isConnected"
+      text="To perform actions on the page, connect your wallet"
+    />
     <div class="btns-group">
       <div class="btn-wrapper">
         <ButtonItem
@@ -18,6 +21,7 @@
           text="Connect wallet"
           @click="showModal"
         ></ButtonItem>
+        <ButtonItem v-else :yellow="true" text="Stake"></ButtonItem>
       </div>
       <div class="btn-wrapper">
         <ButtonItem
@@ -103,7 +107,6 @@ export default {
   position: absolute;
   right: 16px;
   top: 16px;
-  /*background: url("../assets/approved.svg");*/
 }
 
 h2 {

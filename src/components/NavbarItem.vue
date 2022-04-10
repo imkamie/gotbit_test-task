@@ -117,7 +117,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 8px;
+  height: 48px;
+  padding: 8px;
   background: #ffffff;
   border-radius: 12px;
 }
@@ -125,6 +126,7 @@ export default {
 .address {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 7px 8px;
   background: rgba(255, 212, 44, 0.2);
   border-radius: 8px;
