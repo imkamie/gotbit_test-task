@@ -1,91 +1,88 @@
 import { createStore } from "vuex";
-import { getUserAddress } from "../utils/connectWallet";
-// import getWeb3 from "../utils/getWeb3";
-// import pollWeb3 from "../utils/pollWeb3";
-// import getContract from "../utils/getContract";
+import { ABI, address } from "../utils/constants";
+import { ethers } from "ethers";
 
 export const store = createStore({
   state() {
     return {
       isConnected: false,
-      contractInstance: null,
-      userAddress: null,
+      account: null,
       balance: null,
+      contractAddress: address,
     };
   },
   getters: {
-    IS_CONNECTED(state) {
+    isConnected(state) {
       return state.isConnected;
     },
-    USER_ADDRESS(state) {
-      return state.userAddress;
+    account(state) {
+      return state.account;
     },
-    USER_BALANCE(state) {
+    balance(state) {
       return state.balance;
     },
   },
   mutations: {
-    CONNECT(state) {
+    setConnected(state) {
       state.isConnected = true;
     },
-    SET_ADDRESS(state, payload) {
-      // getUserAddress().then();
-      state.userAddress = payload;
+    setAccount(state, account) {
+      state.account = account;
     },
-    // registerWeb3Instance(state, payload) {
-    //   console.log("registerWeb3instance Mutation being executed", payload);
-    //   let result = payload;
-    //   let web3Copy = state;
-    //   web3Copy.userAddress = result.userAddress;
-    //   web3Copy.balance = parseInt(result.balance, 10);
-    //   state.web3 = web3Copy;
-    //   pollWeb3();
-    // },
-    // pollWeb3Instance(state, payload) {
-    //   console.log("pollWeb3Instance mutation being executed", payload);
-    //   state.userAddress = payload.userAddress;
-    //   state.balance = parseInt(payload.balance, 10);
-    // },
-    // registerContractInstance(state, payload) {
-    //   console.log("Casino contract instance: ", payload);
-    //   state.contractInstance = () => payload;
-    // },
+    setBalance(state, balance) {
+      state.balance = balance;
+    },
   },
   actions: {
-    SET_CONNECT({ commit }) {
-      commit("CONNECT");
+    async connect({ commit, dispatch }, connect) {
+      try {
+        const { ethereum } = window;
+        if (!ethereum) {
+          commit("setError", "Metamask not installed!");
+          return;
+        }
+        if (!(await dispatch("checkIfConnected")) && connect) {
+          await dispatch("requestAccess");
+        }
+      } catch (error) {
+        console.log(error);
+        commit("setError", "Account request refused.");
+      }
     },
-    SET_USER_ADDRESS({commit}) {
-      getUserAddress().then((result) => {
-        commit("SET_ADDRESS", result);
-        console.log(result);
+    async checkIfConnected({ commit }) {
+      const { ethereum } = window;
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (accounts.length !== 0) {
+        commit("setAccount", accounts[0]);
+        return 1;
+      } else {
+        return 0;
+      }
+    },
+    async requestAccess({ commit }) {
+      const { ethereum } = window;
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
       });
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      await provider.getBalance(accounts[0]).then((balance) => {
+        let etherString = ethers.utils.formatEther(balance);
+        commit("setBalance", etherString);
+      });
+      commit("setAccount", accounts[0]);
+      commit("setConnected");
     },
-
-
-
-
-    // registerWeb3({ commit }) {
-    //   console.log("registerWeb3 Action being executed");
-    //   getWeb3
-    //     .then((result) => {
-    //       console.log("committing result to registerWeb3Instance mutation");
-    //       commit("registerWeb3Instance", result);
-    //     })
-    //     .catch((e) => {
-    //       console.log("error in action registerWeb3", e);
-    //     });
-    // },
-    // pollWeb3({ commit }, payload) {
-    //   console.log("pollWeb3 action being executed");
-    //   commit("pollWeb3Instance", payload);
-    // },
-    // getContractInstance({ commit }) {
-    //   getContract
-    //     .then((result) => {
-    //       commit("registerContractInstance", result);
-    //     })
-    //     .catch((e) => console.log(e));
-    // },
+    async getContract({ state }) {
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        return new ethers.Contract(state.contractAddress, ABI, signer);
+      } catch (error) {
+        console.log(error);
+        console.log("connected contract not found");
+        return null;
+      }
+    },
   },
 });

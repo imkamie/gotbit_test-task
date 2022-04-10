@@ -4,7 +4,7 @@
       <div class="navbar-item staking">Staking</div>
       <div class="navbar-item">Bridge</div>
       <div class="navbar-item">SHO</div>
-      <div v-if="!IS_CONNECTED" class="navbar-item btn-wrapper">
+      <div v-if="!isConnected" class="navbar-item btn-wrapper">
         <button-item
           :white="true"
           text="Connect wallet"
@@ -12,8 +12,16 @@
         ></button-item>
       </div>
       <div v-else class="navbar-item user-info">
-        <div class="user-address">{{USER_ADDRESS}}</div>
-        <div class="user-balance"></div>
+        <div class="address">
+          <div class="user-address">{{ showAccount(account) }}</div>
+          <button @click="copyToClipBoard" class="user-address_copy">
+            <img src="src/assets/copyAddress.svg" alt="Copy account address" />
+          </button>
+        </div>
+        <div class="user-balance">{{ balance }} BUSD</div>
+        <button class="more-info">
+          <img src="src/assets/arrow.svg" alt="" />
+        </button>
       </div>
     </div>
   </div>
@@ -32,13 +40,7 @@ export default {
     SelectPayment,
   },
   computed: {
-    ...mapGetters(["IS_CONNECTED", "USER_ADDRESS"]),
-    userAddress() {
-      return this.$store.getters.userAddress;
-    },
-    // userBalance() {
-    //   return this.$store.getters.balance;
-    // },
+    ...mapGetters(["isConnected", "account", "balance"]),
   },
   methods: {
     closeModal() {
@@ -47,27 +49,19 @@ export default {
     showModal() {
       this.isVisible = true;
     },
+    showAccount(address) {
+      return (
+        address.substring(0, 6) + "..." + address.substring(address.length - 4)
+      );
+    },
+    copyToClipBoard() {
+      navigator.clipboard.writeText(this.$store.getters.account);
+    },
   },
   data() {
     return {
       isVisible: false,
     };
-  },
-
-
-
-  mounted() {
-    this.$store.dispatch("SET_USER_ADDRESS").then(
-      () => {
-        console.log("Got some data, now lets show something in this component");
-        // TODO: stop the ajax spinner, loading is done at this point.
-      },
-      () => {
-        console.error(
-          "Got nothing from server. Prompt user to check internet connection and try again"
-        );
-      }
-    );
   },
 };
 </script>
@@ -117,5 +111,69 @@ export default {
   left: 0;
   bottom: -26px;
   border-bottom: #ed1c24 solid 4px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.address {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 8px;
+  background: rgba(255, 212, 44, 0.2);
+  border-radius: 8px;
+}
+
+.user-address {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.2875px;
+  color: #e2ad06;
+}
+
+.user-address_copy {
+  margin-left: 9px;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.user-balance {
+  margin-left: 20px;
+  margin-right: 52px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.2875px;
+  color: #343840;
+}
+
+.user-balance:after {
+  content: url("../assets/BNB.svg");
+  position: absolute;
+  right: -36px;
+  top: -3px;
+}
+
+.more-info {
+  margin-right: 12px;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
 }
 </style>

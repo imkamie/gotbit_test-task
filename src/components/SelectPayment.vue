@@ -57,17 +57,11 @@ export default {
     closePopup() {
       this.$emit("closePopup");
     },
-    connectWithMetamask() {
-      // getWeb3
-      //   .then(console.log("committing result to registerWeb3Instance mutation"))
-      //   .catch((e) => {
-      //     console.log("error in action registerWeb3", e);
-      //   });
-      clickConnectMetamask();
-      // let address = getAddress;
+    async connectWithMetamask() {
+      await this.$store.dispatch("connect", 1);
+      // clickConnectMetamask();
       this.closePopup();
-      this.SET_CONNECT();
-      // this.SET_ADDRESS();
+      // this.SET_CONNECT();
     },
     async connectWithWalletconnect() {
       clickConnectWalletConnect();
@@ -84,7 +78,7 @@ export default {
         this.address = accounts[0];
       });
       this.closePopup();
-      this.SET_CONNECT();
+      // this.SET_CONNECT();
       // this.SET_ADDRESS();
     },
   },

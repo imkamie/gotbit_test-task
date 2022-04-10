@@ -1,4 +1,3 @@
-import Web3 from "web3";
 import { ethers } from "ethers";
 import { ABI, address } from "./constants";
 import WalletConnect from "@walletconnect/client";

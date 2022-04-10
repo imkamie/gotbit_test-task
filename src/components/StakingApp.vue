@@ -2,7 +2,7 @@
   <div class="staking-app">
     <div class="header">
       <h2>Staking App</h2>
-      <div v-if="IS_CONNECTED" class="approved">Wallet approved</div>
+      <div v-if="isConnected" class="approved">Wallet approved</div>
     </div>
     <div class="token-cards">
       <TokenCard amount="100 - 299" apy="103,23" duration="30" />
@@ -13,7 +13,7 @@
     <div class="btns-group">
       <div class="btn-wrapper">
         <ButtonItem
-          v-if="!IS_CONNECTED"
+          v-if="!isConnected"
           :yellow="true"
           text="Connect wallet"
           @click="showModal"
@@ -53,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["IS_CONNECTED"]),
+    ...mapGetters(["isConnected"]),
   },
   methods: {
     closeModal() {

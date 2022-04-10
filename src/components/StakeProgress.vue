@@ -2,7 +2,7 @@
   <div class="staking-app">
     <div class="header">
       <h2>Staking App</h2>
-      <div v-if="IS_CONNECTED" class="approved">Wallet approved</div>
+      <div v-if="isConnected" class="approved">Wallet approved</div>
     </div>
     <div class="stake-info">
       <h2 class="tokens-earned-amount">26,6666</h2>
@@ -55,7 +55,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["IS_CONNECTED"]),
+    ...mapGetters(["isConnected"]),
   },
 };
 </script>
