@@ -13,6 +13,7 @@ export const store = createStore({
       contractAddress: address,
       periods: [],
       rates: [],
+      stakeInfo: {},
     };
   },
   getters: {
@@ -34,6 +35,9 @@ export const store = createStore({
     rates(state) {
       return state.rates;
     },
+    stakeInfo(state) {
+      return state.stakeInfo;
+    },
   },
   mutations: {
     setConnected(state) {
@@ -53,6 +57,9 @@ export const store = createStore({
     },
     setRates(state, rates) {
       state.rates = rates;
+    },
+    setStakeInfo(state, stakeInfo) {
+      state.stakeInfo = stakeInfo;
     },
   },
   actions: {
@@ -149,10 +156,21 @@ export const store = createStore({
         const ratesFromContract = [];
         for (let i = 0; i < 3; i++) {
           await connectedContract.rates(i).then((result) => {
-            ratesFromContract.push(result / 100 + "%");
+            ratesFromContract.push(result / 100);
           });
         }
         commit("setRates", ratesFromContract);
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    },
+    fillStakeInfo({ commit, state }) {
+      try {
+        const stakeInfo = {};
+        stakeInfo.rates = state.rates;
+        stakeInfo.periods = state.periods;
+        commit("setStakeInfo", stakeInfo);
       } catch (error) {
         console.log(error);
         return null;

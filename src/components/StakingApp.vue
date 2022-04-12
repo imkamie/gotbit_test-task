@@ -2,13 +2,19 @@
   <div class="staking-app">
     <div class="header">
       <h2>Staking App</h2>
-      <div v-if="isConnected" class="approved">Wallet approved</div>
+      <div v-if="isApproved" class="approved">Wallet approved</div>
     </div>
-    <div class="token-cards">
+    <div v-if="!isConnected" class="token-cards">
       <TokenCardRadio amount="100 - 299" apy="103,23" duration="30" />
-      <TokenCardRadio amount="100 - 299" apy="116,86" duration="90" />
-      <TokenCardRadio amount="500 - 1000" apy="129,97" duration="150" />
+      <TokenCardRadio amount="100 - 299" apy="116,86" duration="60" />
+      <TokenCardRadio amount="500 - 1000" apy="129,97" duration="90" />
     </div>
+    <ul v-if="isConnected" class="token-cards">
+      <!--TODO: сделать с помощью объекта-->
+      <li v-for="period in periods" :key="period">
+        <TokenCardRadio amount="100 - 299" apy="103,23" :duration="period" />
+      </li>
+    </ul>
     <div class="info-item">
       <InfoItem
         v-if="!isConnected"
@@ -36,14 +42,10 @@
           text="Approve wallet"
           @click="approve"
         ></ButtonItem>
-        <ButtonItem
-          v-else
-          :yellow="true"
-          text="Stake"
-        ></ButtonItem>
+        <ButtonItem v-else :yellow="true" text="Stake"></ButtonItem>
       </div>
-<!--      <ButtonItem :yellow="true" text="periods" @click="period"></ButtonItem>-->
-<!--      <ButtonItem :yellow="true" text="rates" @click="rate"></ButtonItem>-->
+      <!--      <ButtonItem :yellow="true" text="periods" @click="period"></ButtonItem>-->
+      <!--      <ButtonItem :yellow="true" text="rates" @click="rate"></ButtonItem>-->
       <div class="btn-wrapper">
         <ButtonItem
           :white="true"
@@ -80,7 +82,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isConnected", "isApproved", "periods", "rates"]),
+    ...mapGetters([
+      "isConnected",
+      "isApproved",
+      "rates",
+      "periods",
+      "stakeInfo",
+    ]),
+  },
+  updated() {
+    this.$store.dispatch("getPeriods");
+    this.$store.dispatch("getRates");
+    this.$store.dispatch("fillStakeInfo");
   },
   methods: {
     closeModal() {
@@ -158,6 +171,8 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-top: 52px;
+  list-style: none;
+  padding: 0;
 }
 
 .info-item {
