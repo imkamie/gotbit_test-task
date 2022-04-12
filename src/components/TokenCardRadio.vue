@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isConnected" class="card">
+  <div v-if="!isConnected || !isApproved" class="card">
     <div class="duration">{{ duration }} Days</div>
     <div class="apy">APY: {{ apy }}%</div>
     <div class="amount">Amount: {{ amount }} TKN</div>
@@ -20,7 +20,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "TokenCardRadio",
   computed: {
-    ...mapGetters(["isConnected"]),
+    ...mapGetters(["isConnected", "isApproved"]),
   },
   props: {
     duration: {

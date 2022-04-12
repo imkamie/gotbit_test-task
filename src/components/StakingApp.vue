@@ -9,10 +9,19 @@
       <TokenCardRadio amount="100 - 299" apy="116,86" duration="90" />
       <TokenCardRadio amount="500 - 1000" apy="129,97" duration="150" />
     </div>
-    <InfoItem
-      v-if="!isConnected"
-      text="To perform actions on the page, connect your wallet"
-    />
+    <div class="info-item">
+      <InfoItem
+        v-if="!isConnected"
+        text="To perform actions on the page, connect your wallet"
+      />
+      <InfoItem
+        v-if="isConnected && !isApproved"
+        text="To perform actions on the page, approve your wallet"
+      />
+    </div>
+    <div class="input-item">
+      <TokenInput v-if="isConnected && isApproved" />
+    </div>
     <div class="btns-group">
       <div class="btn-wrapper">
         <ButtonItem
@@ -21,8 +30,20 @@
           text="Connect wallet"
           @click="showModal"
         ></ButtonItem>
-        <ButtonItem v-else :yellow="true" text="Stake"></ButtonItem>
+        <ButtonItem
+          v-else-if="isConnected && !isApproved"
+          :yellow="true"
+          text="Approve wallet"
+          @click="approve"
+        ></ButtonItem>
+        <ButtonItem
+          v-else
+          :yellow="true"
+          text="Stake"
+        ></ButtonItem>
       </div>
+<!--      <ButtonItem :yellow="true" text="periods" @click="period"></ButtonItem>-->
+<!--      <ButtonItem :yellow="true" text="rates" @click="rate"></ButtonItem>-->
       <div class="btn-wrapper">
         <ButtonItem
           :white="true"
@@ -40,11 +61,13 @@ import TokenCardRadio from "./TokenCardRadio.vue";
 import InfoItem from "./InfoItem.vue";
 import ButtonItem from "./ButtonItem.vue";
 import SelectPayment from "./SelectPayment.vue";
+import TokenInput from "./TokenInput.vue";
 import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 export default {
   name: "stakingApp",
   components: {
+    TokenInput,
     ButtonItem,
     InfoItem,
     TokenCardRadio,
@@ -57,7 +80,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isConnected"]),
+    ...mapGetters(["isConnected", "isApproved", "periods", "rates"]),
   },
   methods: {
     closeModal() {
@@ -70,6 +93,18 @@ export default {
       const redirectWindow = window.open(url, "_blank");
       redirectWindow.location;
     },
+    async approve() {
+      await this.$store.dispatch("approveWallet");
+    },
+    // stake() {
+    //   console.log("staked");
+    // },
+    // async period() {
+    //   await this.$store.dispatch("getPeriods");
+    // },
+    // async rate() {
+    //   await this.$store.dispatch("getRates");
+    // },
   },
 };
 </script>
@@ -122,7 +157,15 @@ h2 {
 .token-cards {
   display: flex;
   justify-content: space-between;
-  margin: 52px 0 55px;
+  margin-top: 52px;
+}
+
+.info-item {
+  margin-top: 55px;
+}
+
+.input-item {
+  margin-top: 47px;
 }
 
 .btns-group {
