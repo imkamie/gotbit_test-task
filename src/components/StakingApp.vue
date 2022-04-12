@@ -5,14 +5,17 @@
       <div v-if="isApproved" class="approved">Wallet approved</div>
     </div>
     <div v-if="!isConnected" class="token-cards">
-      <TokenCardRadio amount="100 - 299" apy="103,23" duration="30" />
-      <TokenCardRadio amount="100 - 299" apy="116,86" duration="60" />
-      <TokenCardRadio amount="500 - 1000" apy="129,97" duration="90" />
+      <TokenCardRadio amount="100 - 299" apy="103.23" :duration="30" />
+      <TokenCardRadio amount="100 - 299" apy="116.86" :duration="60" />
+      <TokenCardRadio amount="500 - 1000" apy="129.97" :duration="90" />
     </div>
     <ul v-if="isConnected" class="token-cards">
-      <!--TODO: сделать с помощью объекта-->
-      <li v-for="period in periods" :key="period">
-        <TokenCardRadio amount="100 - 299" apy="103,23" :duration="period" />
+      <li v-for="value in stakeInfo" :key="value">
+        <TokenCardRadio
+          amount="100 - 299"
+          :apy="(value.rates / 100).toFixed(2)"
+          :duration="value.periods"
+        />
       </li>
     </ul>
     <div class="info-item">
@@ -44,8 +47,6 @@
         ></ButtonItem>
         <ButtonItem v-else :yellow="true" text="Stake"></ButtonItem>
       </div>
-      <!--      <ButtonItem :yellow="true" text="periods" @click="period"></ButtonItem>-->
-      <!--      <ButtonItem :yellow="true" text="rates" @click="rate"></ButtonItem>-->
       <div class="btn-wrapper">
         <ButtonItem
           :white="true"
@@ -85,15 +86,8 @@ export default {
     ...mapGetters([
       "isConnected",
       "isApproved",
-      "rates",
-      "periods",
       "stakeInfo",
     ]),
-  },
-  updated() {
-    this.$store.dispatch("getPeriods");
-    this.$store.dispatch("getRates");
-    this.$store.dispatch("fillStakeInfo");
   },
   methods: {
     closeModal() {
@@ -109,15 +103,6 @@ export default {
     async approve() {
       await this.$store.dispatch("approveWallet");
     },
-    // stake() {
-    //   console.log("staked");
-    // },
-    // async period() {
-    //   await this.$store.dispatch("getPeriods");
-    // },
-    // async rate() {
-    //   await this.$store.dispatch("getRates");
-    // },
   },
 };
 </script>

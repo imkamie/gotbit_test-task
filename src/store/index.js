@@ -13,7 +13,7 @@ export const store = createStore({
       contractAddress: address,
       periods: [],
       rates: [],
-      stakeInfo: {},
+      stakeInfo: [],
     };
   },
   getters: {
@@ -88,7 +88,7 @@ export const store = createStore({
         return 0;
       }
     },
-    async requestAccess({ commit }) {
+    async requestAccess({ commit, dispatch, state }) {
       const { ethereum } = window;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -98,6 +98,31 @@ export const store = createStore({
         let etherString = ethers.utils.formatEther(balance);
         commit("setBalance", etherString);
       });
+      const connectedContract = await dispatch("getStakingContract");
+      const ratesFromContract = [];
+      for (let i = 0; i < 3; i++) {
+        await connectedContract.rates(i).then((result) => {
+          ratesFromContract.push(result);
+        });
+      }
+      const periodsFromContract = [];
+      for (let i = 0; i < 3; i++) {
+        await connectedContract.periods(i).then((result) => {
+          periodsFromContract.push(result / 86400);
+        });
+      }
+      commit("setPeriods", periodsFromContract);
+      commit("setRates", ratesFromContract);
+
+      const stakeInfo = [];
+      for (let i = 0; i < 3; i++) {
+        stakeInfo.push({
+          rates: ratesFromContract[i],
+          periods: periodsFromContract[i],
+        });
+      }
+      commit("setStakeInfo", stakeInfo);
+
       commit("setAccount", accounts[0]);
       commit("setConnected");
     },
@@ -130,47 +155,6 @@ export const store = createStore({
         const connectedContract = await dispatch("getTokenContract");
         await connectedContract.approve(address, 0);
         commit("setApproved");
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    },
-    async getPeriods({ commit, dispatch }) {
-      try {
-        const connectedContract = await dispatch("getStakingContract");
-        const periodsFromContract = [];
-        for (let i = 0; i < 3; i++) {
-          await connectedContract.periods(i).then((result) => {
-            periodsFromContract.push(result / 86400);
-          });
-        }
-        commit("setPeriods", periodsFromContract);
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    },
-    async getRates({ commit, dispatch }) {
-      try {
-        const connectedContract = await dispatch("getStakingContract");
-        const ratesFromContract = [];
-        for (let i = 0; i < 3; i++) {
-          await connectedContract.rates(i).then((result) => {
-            ratesFromContract.push(result / 100);
-          });
-        }
-        commit("setRates", ratesFromContract);
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    },
-    fillStakeInfo({ commit, state }) {
-      try {
-        const stakeInfo = {};
-        stakeInfo.rates = state.rates;
-        stakeInfo.periods = state.periods;
-        commit("setStakeInfo", stakeInfo);
       } catch (error) {
         console.log(error);
         return null;

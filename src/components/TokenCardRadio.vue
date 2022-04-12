@@ -24,7 +24,7 @@ export default {
   },
   props: {
     duration: {
-      type: String,
+      type: Number,
       required: true,
     },
     apy: {
