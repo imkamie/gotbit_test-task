@@ -4,12 +4,13 @@
       <h2>Staking App</h2>
       <div v-if="isApproved" class="approved">Wallet approved</div>
     </div>
-    <div v-if="!isConnected" class="token-cards">
+
+    <div v-if="!isApproved" class="token-cards">
       <TokenCardRadio amount="100 - 299" apy="100.00" :duration="30" />
       <TokenCardRadio amount="100 - 299" apy="125.00" :duration="60" />
       <TokenCardRadio amount="500 - 1000" apy="150.00" :duration="90" />
     </div>
-    <ul v-if="isConnected" class="token-cards">
+    <ul v-if="isApproved" class="token-cards">
       <li v-for="value in stakeInfo" :key="value">
         <TokenCardRadio
           :value="value"
@@ -19,6 +20,7 @@
         />
       </li>
     </ul>
+
     <div class="info-item">
       <InfoItem
         v-if="!isConnected"
@@ -29,9 +31,11 @@
         text="To perform actions on the page, approve your wallet"
       />
     </div>
+
     <div class="input-item">
       <TokenInput placeholder="" v-if="isConnected && isApproved" />
     </div>
+
     <div class="btns-group">
       <div class="btn-wrapper">
         <ButtonItem
@@ -39,21 +43,22 @@
           :yellow="true"
           text="Connect wallet"
           @click="showModal"
-        ></ButtonItem>
+        />
         <ButtonItem
           v-else-if="isConnected && !isApproved"
           :yellow="true"
           text="Approve wallet"
           @click="approve"
-        ></ButtonItem>
-        <ButtonItem v-else :yellow="true" text="Stake"></ButtonItem>
+        />
+        <ButtonItem v-else :yellow="true" text="Stake" />
       </div>
+
       <div class="btn-wrapper">
         <ButtonItem
           :white="true"
           text="View contract"
           @click="redirectToContract(contractLink)"
-        ></ButtonItem>
+        />
       </div>
     </div>
   </div>

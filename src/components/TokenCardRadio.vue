@@ -5,7 +5,7 @@
     <div class="amount">Amount: {{ amount }} TKN</div>
   </div>
   <label v-else>
-    <input type="radio" value="{{ value }}" />
+    <input type="radio" name="pickedStake" value="{{ value }}" />
     <div class="card-radio">
       <div class="duration">{{ duration }} Days</div>
       <div class="apy">APY: {{ apy }}%</div>
