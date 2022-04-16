@@ -14,6 +14,7 @@ export const store = createStore({
       periods: [],
       rates: [],
       stakeInfo: [],
+      tokenBalance: null,
     };
   },
   getters: {
@@ -38,6 +39,9 @@ export const store = createStore({
     stakeInfo(state) {
       return state.stakeInfo;
     },
+    tokenBalance(state) {
+      return state.tokenBalance;
+    },
   },
   mutations: {
     setConnected(state) {
@@ -60,6 +64,9 @@ export const store = createStore({
     },
     setStakeInfo(state, stakeInfo) {
       state.stakeInfo = stakeInfo;
+    },
+    setTokenBalance(state, tokenBalance) {
+      state.tokenBalance = tokenBalance;
     },
   },
   actions: {
@@ -88,7 +95,7 @@ export const store = createStore({
         return 0;
       }
     },
-    async requestAccess({ commit, dispatch, state }) {
+    async requestAccess({ commit, dispatch }) {
       const { ethereum } = window;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -150,10 +157,14 @@ export const store = createStore({
         return null;
       }
     },
-    async approveWallet({ commit, dispatch }) {
+    async approveWallet({ commit, dispatch, state }) {
       try {
         const connectedContract = await dispatch("getTokenContract");
         await connectedContract.approve(address, 0);
+        await connectedContract.balanceOf(state.account).then((result) => {
+          let tokenBalance = ethers.utils.formatEther(result._hex) / 1;
+          commit("setTokenBalance", tokenBalance);
+        });
         commit("setApproved");
       } catch (error) {
         console.log(error);

@@ -29,7 +29,7 @@
       />
     </div>
     <div class="input-item">
-      <TokenInput v-if="isConnected && isApproved" />
+      <TokenInput placeholder="" v-if="isConnected && isApproved" />
     </div>
     <div class="btns-group">
       <div class="btn-wrapper">
@@ -83,11 +83,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "isConnected",
-      "isApproved",
-      "stakeInfo",
-    ]),
+    ...mapGetters(["isConnected", "isApproved", "stakeInfo"]),
   },
   methods: {
     closeModal() {

@@ -1,6 +1,9 @@
 <template>
-  <div class="input">
-    <input class="token-input" placeholder="0" />
+  <div>
+    <div class="input">
+      <input class="token-input" :placeholder="placeholder" v-model="value" />
+      <button class="input-button" @click="showMaxTokens">Max</button>
+    </div>
     <div class="reward-count">
       Reward for 30 days:
       <span class="reward">400 TKN</span>
@@ -11,6 +14,22 @@
 <script>
 export default {
   name: "TokenInput",
+  props: {
+    placeholder: {
+      type: String,
+      default: " ",
+    },
+  },
+  data() {
+    return {
+      value: null,
+    };
+  },
+  methods: {
+    showMaxTokens() {
+      this.value = this.$store.state.tokenBalance;
+    },
+  },
 };
 </script>
 
@@ -27,6 +46,23 @@ export default {
   font-size: 20px;
   line-height: 32px;
   color: #343840;
+}
+
+.input-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 14px 16px;
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: right;
+  color: #ffd42c;
 }
 
 .reward-count {
