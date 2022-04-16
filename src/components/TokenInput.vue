@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      value: String,
+      value: "",
       isValid: true,
     };
   },
@@ -46,8 +46,8 @@ export default {
   },
   methods: {
     showMaxTokens() {
+      this.value = String(this.$store.state.tokenBalance);
       this.validate();
-      this.value = this.$store.state.tokenBalance;
     },
     validate() {
       this.value = this.value.replace(/[^\d]/g, "");
@@ -56,7 +56,7 @@ export default {
         this.value = String(this.$store.state.tokenBalance);
       }
 
-      if (Number(this.value) === 0) {
+      if (Number(this.value) === 0 && this.value.length !== 0) {
         this.className.error = true;
         return (this.isValid = false);
       }
