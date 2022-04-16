@@ -1,9 +1,16 @@
 <template>
   <div>
     <div class="input">
-      <input class="token-input" :placeholder="placeholder" v-model="value" />
+      <input
+        :class="className"
+        class="token-input"
+        :placeholder="placeholder"
+        v-model="value"
+        @input="validate"
+      />
       <button class="input-button" @click="showMaxTokens">Max</button>
     </div>
+    <div v-if="!isValid" class="input-error">Error proper amount</div>
     <div class="reward-count">
       Reward for 30 days:
       <span class="reward">400 TKN</span>
@@ -19,15 +26,42 @@ export default {
       type: String,
       default: " ",
     },
+    error: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       value: null,
+      isValid: true,
     };
+  },
+  computed: {
+    className() {
+      return {
+        error: this.error,
+      };
+    },
   },
   methods: {
     showMaxTokens() {
       this.value = this.$store.state.tokenBalance;
+    },
+    validate() {
+      this.value = this.value.replace(/[^\d]/g, "");
+
+      if (Number(this.value) > this.$store.state.tokenBalance) {
+        this.value = String(this.$store.state.tokenBalance);
+      }
+
+      if (Number(this.value) === 0) {
+        this.className.error = true;
+        return (this.isValid = false);
+      }
+
+      this.className.error = false;
+      return (this.isValid = true);
     },
   },
 };
@@ -48,6 +82,10 @@ export default {
   color: #343840;
 }
 
+.error {
+  border: 1px solid #da554a;
+}
+
 .input-button {
   position: absolute;
   top: 0;
@@ -63,6 +101,17 @@ export default {
   line-height: 32px;
   text-align: right;
   color: #ffd42c;
+}
+
+.input-error {
+  position: absolute;
+  margin-left: 16px;
+  margin-top: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #da554a;
 }
 
 .reward-count {
