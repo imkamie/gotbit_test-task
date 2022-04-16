@@ -5,13 +5,14 @@
       <div v-if="isApproved" class="approved">Wallet approved</div>
     </div>
     <div v-if="!isConnected" class="token-cards">
-      <TokenCardRadio amount="100 - 299" apy="103.23" :duration="30" />
-      <TokenCardRadio amount="100 - 299" apy="116.86" :duration="60" />
-      <TokenCardRadio amount="500 - 1000" apy="129.97" :duration="90" />
+      <TokenCardRadio amount="100 - 299" apy="100.00" :duration="30" />
+      <TokenCardRadio amount="100 - 299" apy="125.00" :duration="60" />
+      <TokenCardRadio amount="500 - 1000" apy="150.00" :duration="90" />
     </div>
     <ul v-if="isConnected" class="token-cards">
       <li v-for="value in stakeInfo" :key="value">
         <TokenCardRadio
+          :value="value"
           amount="100 - 299"
           :apy="(value.rates / 100).toFixed(2)"
           :duration="value.periods"

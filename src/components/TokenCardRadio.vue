@@ -1,11 +1,11 @@
 <template>
-  <div v-if="!isConnected || !isApproved" class="card">
+  <div v-if="!isApproved" class="card">
     <div class="duration">{{ duration }} Days</div>
     <div class="apy">APY: {{ apy }}%</div>
     <div class="amount">Amount: {{ amount }} TKN</div>
   </div>
   <label v-else>
-    <input type="radio" name="test" />
+    <input type="radio" value="{{ value }}" />
     <div class="card-radio">
       <div class="duration">{{ duration }} Days</div>
       <div class="apy">APY: {{ apy }}%</div>
@@ -34,6 +34,9 @@ export default {
     amount: {
       type: String,
       required: true,
+    },
+    value: {
+      type: Object,
     },
   },
 };
