@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      value: null,
+      value: String,
       isValid: true,
     };
   },
@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     showMaxTokens() {
+      this.validate();
       this.value = this.$store.state.tokenBalance;
     },
     validate() {
@@ -80,6 +81,7 @@ export default {
   font-size: 20px;
   line-height: 32px;
   color: #343840;
+  outline: none;
 }
 
 .error {
