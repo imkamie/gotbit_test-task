@@ -13,7 +13,7 @@
     <div v-if="!isValid" class="input-error">Error proper amount</div>
     <div class="reward-count">
       Reward for 30 days:
-      <span class="reward">400 TKN</span>
+      <span class="reward">{{ calculateReward(this.value) }}</span>
     </div>
   </div>
 </template>
@@ -63,6 +63,13 @@ export default {
 
       this.className.error = false;
       return (this.isValid = true);
+    },
+    calculateReward(input) {
+      if (!input) {
+        return "";
+      }
+      const result = (Number(input) * 10000 * 30) / 10000 / 360;
+      return Math.trunc(result * 10000) / 10000 + " TKN";
     },
   },
 };

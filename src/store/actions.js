@@ -3,11 +3,10 @@ import { stakingAddress, stakingABI } from "../utils/constants";
 import { tokenABI, tokenAddress } from "../utils/token";
 
 export default {
-  async connect({ commit, dispatch }, connect) {
+  async connect({ dispatch }, connect) {
     try {
       const { ethereum } = window;
       if (!ethereum) {
-        commit("setError", "Metamask not installed!");
         return;
       }
       if (!(await dispatch("checkIfConnected")) && connect) {
@@ -15,7 +14,6 @@ export default {
       }
     } catch (error) {
       console.log(error);
-      commit("setError", "Account request refused.");
     }
   },
   async checkIfConnected({ commit }) {

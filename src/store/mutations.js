@@ -23,4 +23,7 @@ export default {
   setTokenBalance(state, tokenBalance) {
     state.tokenBalance = tokenBalance;
   },
+  setPickedStake(state, picked) {
+    state.pickedStake = picked;
+  },
 };

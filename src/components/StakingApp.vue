@@ -13,6 +13,7 @@
     <ul v-if="isApproved" class="token-cards">
       <li v-for="value in stakeInfo" :key="value">
         <TokenCardRadio
+          v-model="pickedStake"
           :value="value"
           amount="100 - 299"
           :apy="(value.rates / 100).toFixed(2)"
@@ -90,6 +91,14 @@ export default {
   },
   computed: {
     ...mapGetters(["isConnected", "isApproved", "stakeInfo"]),
+    pickedStake: {
+      set(value) {
+        this.$store.commit("setPickedStake", value);
+      },
+      get() {
+        return this.$store.state.pickedStake;
+      },
+    },
   },
   methods: {
     closeModal() {
