@@ -2,6 +2,7 @@
   <div>
     <div class="input">
       <input
+        :disabled="isDisabled"
         :class="className"
         class="token-input"
         :placeholder="placeholder"
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TokenInput",
   props: {
@@ -38,10 +41,14 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["pickedStake", "reward"]),
     className() {
       return {
         error: this.error,
       };
+    },
+    isDisabled() {
+      return !this.$store.state.pickedStake;
     },
   },
   methods: {
@@ -65,11 +72,17 @@ export default {
       return (this.isValid = true);
     },
     calculateReward(input) {
-      if (!input) {
+      if (Number(input) === 0) {
         return "";
       }
-      const result = (Number(input) * 10000 * 30) / 10000 / 360;
-      return Math.trunc(result * 10000) / 10000 + " TKN";
+      const reward =
+        (Number(input) * this.pickedStake.rates * this.pickedStake.periods) /
+        10000 /
+        360;
+
+      this.$store.commit("setReward", reward);
+
+      return Math.trunc(reward * 10000) / 10000 + " TKN";
     },
   },
 };

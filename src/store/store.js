@@ -16,7 +16,8 @@ export const store = createStore({
       rates: [],
       stakeInfo: [],
       tokenBalance: null,
-      pickedStake: {},
+      pickedStake: null,
+      reward: null,
     };
   },
   getters,

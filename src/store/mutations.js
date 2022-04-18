@@ -26,4 +26,7 @@ export default {
   setPickedStake(state, picked) {
     state.pickedStake = picked;
   },
+  setReward(state, reward) {
+    state.reward = reward;
+  },
 };

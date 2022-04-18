@@ -26,4 +26,7 @@ export default {
   pickedStake(state) {
     return state.pickedStake;
   },
+  reward(state) {
+    return state.reward;
+  },
 };
