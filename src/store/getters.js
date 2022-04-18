@@ -23,4 +23,7 @@ export default {
   tokenBalance(state) {
     return state.tokenBalance;
   },
+  pickedStake(state) {
+    return state.pickedStake;
+  },
 };

@@ -13,7 +13,7 @@
     <ul v-if="isApproved" class="token-cards">
       <li v-for="value in stakeInfo" :key="value">
         <TokenCardRadio
-          v-model="pickedStake"
+          @change="updateStake(value)"
           :value="value"
           amount="100 - 299"
           :apy="(value.rates / 100).toFixed(2)"
@@ -89,16 +89,16 @@ export default {
       contractLink: redirectAddress,
     };
   },
-  computed: {
-    ...mapGetters(["isConnected", "isApproved", "stakeInfo"]),
-    pickedStake: {
-      set(value) {
-        this.$store.commit("setPickedStake", value);
-      },
-      get() {
-        return this.$store.state.pickedStake;
-      },
+  mutations: {
+    pickedStake: function (state, { value }) {
+      Object.assign(state, {
+        rates: value.rates,
+        periods: value.periods,
+      });
     },
+  },
+  computed: {
+    ...mapGetters(["isConnected", "isApproved", "stakeInfo", "pickedStake"]),
   },
   methods: {
     closeModal() {
@@ -113,6 +113,9 @@ export default {
     },
     async approve() {
       await this.$store.dispatch("approveWallet");
+    },
+    updateStake(value) {
+      this.$store.commit("setPickedStake", value);
     },
   },
 };
