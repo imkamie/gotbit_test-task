@@ -44,4 +44,7 @@ export default {
   timerFinish(state) {
     return state.timerFinish;
   },
+  timerExpired(state) {
+    return state.timerExpired;
+  },
 };

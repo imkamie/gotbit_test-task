@@ -1,10 +1,12 @@
 <script>
 import NavbarItem from "./components/NavbarItem.vue";
 import StakingApp from "./components/StakingApp.vue";
+import FooterItem from "./components/FooterItem.vue";
 
 export default {
   name: "App",
   components: {
+    FooterItem,
     StakingApp,
     NavbarItem,
   },
@@ -18,6 +20,9 @@ export default {
   <main class="main">
     <StakingApp />
   </main>
+  <footer>
+    <FooterItem />
+  </footer>
 </template>
 
 <style>

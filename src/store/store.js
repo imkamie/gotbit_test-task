@@ -23,6 +23,7 @@ export const store = createStore({
       stakingTokens: null,
       timerStart: null,
       timerFinish: null,
+      timerExpired: false,
     };
   },
   getters,

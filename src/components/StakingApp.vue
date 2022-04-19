@@ -87,15 +87,28 @@
             text="Stake"
             @click="stake"
           />
-          <CountDownTimer v-if="isStaked" :duration="pickedStake.periods" />
+          <CountDownTimer
+            v-if="isStaked && !timerExpired"
+            :duration="pickedStake.periods"
+          />
+          <ButtonItem
+            v-else-if="isStaked && timerExpired"
+            :yellow="true"
+            text="Restake"
+          />
         </div>
 
         <div class="btn-wrapper">
           <ButtonItem
-            v-if="isStaked"
+            v-if="isStaked && !timerExpired"
             :yellow="true"
             text="Replenish"
-          ></ButtonItem>
+          />
+          <ButtonItem
+            v-else-if="isStaked && timerExpired"
+            :white="true"
+            text="Unstake"
+          />
         </div>
       </div>
 
@@ -158,6 +171,7 @@ export default {
       "reward",
       "timerStart",
       "timerFinish",
+      "timerExpired",
     ]),
   },
   methods: {
@@ -257,7 +271,7 @@ h2 {
   content: url("../assets/hand.png");
   position: absolute;
   bottom: 60px;
-  right: 230px;
+  right: 210px;
 }
 
 .tokens-earned-amount {

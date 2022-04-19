@@ -5,11 +5,7 @@
       <div class="navbar-item">Bridge</div>
       <div class="navbar-item">SHO</div>
       <div v-if="!isConnected" class="navbar-item btn-wrapper">
-        <button-item
-          :white="true"
-          text="Connect wallet"
-          @click="showModal"
-        ></button-item>
+        <ButtonItem :white="true" text="Connect wallet" @click="showModal" />
       </div>
       <div v-else class="navbar-item user-info">
         <div class="address">

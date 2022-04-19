@@ -45,4 +45,7 @@ export default {
   setTimerFinish(state, date) {
     state.timerFinish = date;
   },
+  setTimerExpired(state) {
+    state.timerExpired = true;
+  },
 };

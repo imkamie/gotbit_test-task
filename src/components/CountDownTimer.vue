@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     onTimesUp() {
+      this.$store.commit("setTimerExpired");
       clearInterval(this.timerInterval);
     },
 
