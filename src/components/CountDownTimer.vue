@@ -93,6 +93,11 @@ export default {
       "setTimerStart",
       start.toLocaleString("en-US", timeOptions)
     );
+    // To find actual finish time code should be:
+    // const finish = new Date();
+    // finish.setDate(finish.getDate() + 2592000/86400);
+
+    // This code adds only minutes
     const finish = new Date(start.getTime() + (this.duration / 14400) * 1000);
     this.$store.commit(
       "setTimerFinish",
