@@ -38,6 +38,7 @@
 import ButtonItem from "./ButtonItem.vue";
 import { clickConnectWalletConnect, connector } from "../utils/connectWallet";
 import { mapActions } from "vuex";
+
 export default {
   name: "SelectPayment",
   components: { ButtonItem },

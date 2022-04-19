@@ -17,7 +17,7 @@
           :value="value"
           amount="100 - 299"
           :apy="(value.rates / 100).toFixed(2)"
-          :duration="value.periods"
+          :duration="value.periods / 86400"
         />
       </li>
     </ul>
@@ -74,6 +74,7 @@ import SelectPayment from "./SelectPayment.vue";
 import TokenInput from "./TokenInput.vue";
 import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
+
 export default {
   name: "stakingApp",
   components: {
@@ -189,6 +190,10 @@ h2 {
 }
 
 .btn-wrapper {
+  width: 230px;
+}
+
+.timer-wrapper {
   width: 230px;
 }
 </style>

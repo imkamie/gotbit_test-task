@@ -77,6 +77,7 @@ export default {
       }
       const reward =
         (Number(input) * this.pickedStake.rates * this.pickedStake.periods) /
+        86400 /
         10000 /
         360;
 

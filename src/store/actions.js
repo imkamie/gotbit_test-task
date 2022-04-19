@@ -46,7 +46,7 @@ export default {
     const periodsFromContract = [];
     for (let i = 0; i < 3; i++) {
       await connectedContract.periods(i).then((result) => {
-        periodsFromContract.push(result / 86400);
+        periodsFromContract.push(parseInt(result._hex, 16));
       });
     }
     commit("setPeriods", periodsFromContract);
