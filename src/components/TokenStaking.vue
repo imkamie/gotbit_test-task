@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .token-staking {
-  width: 220px;
+  width: 100%;
   padding: 24px 28px;
   background: #eff3f8;
   border-radius: 12px;

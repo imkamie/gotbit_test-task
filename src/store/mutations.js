@@ -29,4 +29,20 @@ export default {
   setReward(state, reward) {
     state.reward = reward;
   },
+  setStaked(state) {
+    state.isStaked = true;
+  },
+  setUnStaked(state) {
+    state.isUnStaked = true;
+    state.isStaked = false;
+  },
+  setStakingTokens(state, tokens) {
+    state.stakingTokens = tokens;
+  },
+  setTimerStart(state, date) {
+    state.timerStart = date;
+  },
+  setTimerFinish(state, date) {
+    state.timerFinish = date;
+  },
 };

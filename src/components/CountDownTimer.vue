@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { timeOptions } from "../utils/constants";
+
 export default {
   name: "CountDownTimer",
   data() {
@@ -86,6 +88,16 @@ export default {
     },
   },
   mounted() {
+    const start = new Date();
+    this.$store.commit(
+      "setTimerStart",
+      start.toLocaleString("en-US", timeOptions)
+    );
+    const finish = new Date(start.getTime() + (this.duration / 14400) * 1000);
+    this.$store.commit(
+      "setTimerFinish",
+      finish.toLocaleString("en-US", timeOptions)
+    );
     this.startTimer();
   },
   methods: {

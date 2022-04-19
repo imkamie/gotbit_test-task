@@ -41,7 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["pickedStake", "reward"]),
+    ...mapGetters(["pickedStake", "reward", "stakingTokens"]),
     className() {
       return {
         error: this.error,
@@ -75,6 +75,9 @@ export default {
       if (Number(input) === 0) {
         return "";
       }
+
+      this.$store.commit("setStakingTokens", Number(input));
+
       const reward =
         (Number(input) * this.pickedStake.rates * this.pickedStake.periods) /
         86400 /

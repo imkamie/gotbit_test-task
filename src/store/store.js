@@ -18,6 +18,11 @@ export const store = createStore({
       tokenBalance: null,
       pickedStake: null,
       reward: null,
+      isStaked: false,
+      isUnStaked: false,
+      stakingTokens: null,
+      timerStart: null,
+      timerFinish: null,
     };
   },
   getters,

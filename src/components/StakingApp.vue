@@ -10,7 +10,7 @@
       <TokenCardRadio amount="100 - 299" apy="125.00" :duration="60" />
       <TokenCardRadio amount="500 - 1000" apy="150.00" :duration="90" />
     </div>
-    <ul v-if="isApproved" class="token-cards">
+    <ul v-if="isApproved && !isStaked" class="token-cards">
       <li v-for="value in stakeInfo" :key="value">
         <TokenCardRadio
           @change="updateStake(value)"
@@ -21,6 +21,35 @@
         />
       </li>
     </ul>
+
+    <div v-if="isStaked">
+      <div class="stake-info">
+        <h2 class="tokens-earned-amount">
+          {{ Math.trunc(reward * 10000) / 10000 }}
+        </h2>
+        <div class="tokens-earned">TKN earned</div>
+        <div class="token-cards-group">
+          <div class="token-card-wrapper-date">
+            <TokenStaking :info="timerStart" text="From" />
+          </div>
+          <div class="token-card-wrapper-date">
+            <TokenStaking :info="timerFinish" text="To" />
+          </div>
+          <div class="token-card-wrapper-tkn">
+            <TokenStaking
+              :info="stakingTokens.toString() + ' TKN'"
+              text="Staked"
+            />
+          </div>
+          <div class="token-card-wrapper-apy">
+            <TokenStaking
+              :info="(pickedStake.rates / 100).toFixed(2) + '%'"
+              text="APY"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="info-item">
       <InfoItem
@@ -33,25 +62,41 @@
       />
     </div>
 
-    <div class="input-item">
+    <div v-if="!isStaked" class="input-item">
       <TokenInput placeholder="" v-if="isConnected && isApproved" />
     </div>
 
     <div class="btns-group">
-      <div class="btn-wrapper">
-        <ButtonItem
-          v-if="!isConnected"
-          :yellow="true"
-          text="Connect wallet"
-          @click="showModal"
-        />
-        <ButtonItem
-          v-else-if="isConnected && !isApproved"
-          :yellow="true"
-          text="Approve wallet"
-          @click="approve"
-        />
-        <ButtonItem v-else :yellow="true" text="Stake" />
+      <div class="btn-pair">
+        <div class="btn-wrapper">
+          <ButtonItem
+            v-if="!isConnected"
+            :yellow="true"
+            text="Connect wallet"
+            @click="showModal"
+          />
+          <ButtonItem
+            v-else-if="isConnected && !isApproved"
+            :yellow="true"
+            text="Approve wallet"
+            @click="approve"
+          />
+          <ButtonItem
+            v-else-if="isConnected && isApproved && !isStaked"
+            :yellow="true"
+            text="Stake"
+            @click="stake"
+          />
+          <CountDownTimer v-if="isStaked" :duration="pickedStake.periods" />
+        </div>
+
+        <div class="btn-wrapper">
+          <ButtonItem
+            v-if="isStaked"
+            :yellow="true"
+            text="Replenish"
+          ></ButtonItem>
+        </div>
       </div>
 
       <div class="btn-wrapper">
@@ -72,17 +117,21 @@ import InfoItem from "./InfoItem.vue";
 import ButtonItem from "./ButtonItem.vue";
 import SelectPayment from "./SelectPayment.vue";
 import TokenInput from "./TokenInput.vue";
+import TokenStaking from "./TokenStaking.vue";
 import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
+import CountDownTimer from "./CountDownTimer.vue";
 
 export default {
   name: "stakingApp",
   components: {
+    CountDownTimer,
     TokenInput,
     ButtonItem,
     InfoItem,
     TokenCardRadio,
     SelectPayment,
+    TokenStaking,
   },
   data() {
     return {
@@ -99,7 +148,17 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["isConnected", "isApproved", "stakeInfo", "pickedStake"]),
+    ...mapGetters([
+      "isConnected",
+      "isApproved",
+      "stakeInfo",
+      "pickedStake",
+      "isStaked",
+      "stakingTokens",
+      "reward",
+      "timerStart",
+      "timerFinish",
+    ]),
   },
   methods: {
     closeModal() {
@@ -117,6 +176,11 @@ export default {
     },
     updateStake(value) {
       this.$store.commit("setPickedStake", value);
+    },
+    stake() {
+      if (this.$store.getters.stakingTokens) {
+        this.$store.commit("setStaked");
+      }
     },
   },
 };
@@ -175,6 +239,60 @@ h2 {
   padding: 0;
 }
 
+.token-cards-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stake-info {
+  margin-top: 90px;
+  padding: 56px 64px 32px;
+  background: #ffffff;
+  border: 1px solid #dfebf5;
+  box-sizing: border-box;
+  border-radius: 24px;
+}
+
+.stake-info:before {
+  content: url("../assets/hand.png");
+  position: absolute;
+  bottom: 60px;
+  right: 230px;
+}
+
+.tokens-earned-amount {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 56px;
+  letter-spacing: 0.06em;
+  color: #da554a;
+}
+
+.tokens-earned {
+  margin-bottom: 24px;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+  color: #b3b7bf;
+}
+
+.token-card-wrapper-date {
+  width: 234px;
+}
+
+.token-card-wrapper-tkn {
+  width: 214px;
+}
+
+.token-card-wrapper-apy {
+  width: 200px;
+}
+
 .info-item {
   margin-top: 55px;
 }
@@ -189,11 +307,13 @@ h2 {
   margin-top: 52px;
 }
 
-.btn-wrapper {
-  width: 230px;
+.btn-pair {
+  display: flex;
+  justify-content: space-between;
+  width: 472px;
 }
 
-.timer-wrapper {
+.btn-wrapper {
   width: 230px;
 }
 </style>

@@ -1,5 +1,12 @@
 const redirectAddress =
   "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
+const timeOptions = {
+  day: "numeric",
+  month: "short",
+  hour12: false,
+  hour: "2-digit",
+  minute: "2-digit",
+};
 const stakingAddress = "0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
 const stakingABI = [
   {
@@ -615,4 +622,4 @@ const stakingABI = [
   },
 ];
 
-export { redirectAddress, stakingAddress, stakingABI };
+export { redirectAddress, timeOptions, stakingAddress, stakingABI };
