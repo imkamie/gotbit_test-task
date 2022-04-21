@@ -122,7 +122,8 @@
       </div>
     </div>
   </div>
-  <SelectPayment v-if="isVisible" @closePopup="closeModal" />
+  <TransactionNotification v-if="isUnStaked && isNotificationVisible" @closeNotification="closeNotification" />
+  <SelectPayment v-if="isPopupVisible" @closePopup="closeModal" />
 </template>
 
 <script>
@@ -135,10 +136,12 @@ import TokenStaking from "./TokenStaking.vue";
 import { redirectAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 import CountDownTimer from "./CountDownTimer.vue";
+import TransactionNotification from "./TransactionNotification.vue";
 
 export default {
   name: "stakingApp",
   components: {
+    TransactionNotification,
     CountDownTimer,
     TokenInput,
     ButtonItem,
@@ -149,7 +152,8 @@ export default {
   },
   data() {
     return {
-      isVisible: false,
+      isPopupVisible: false,
+      isNotificationVisible: false,
       contractLink: redirectAddress,
     };
   },
@@ -168,6 +172,7 @@ export default {
       "stakeInfo",
       "pickedStake",
       "isStaked",
+      "isUnStaked",
       "stakingTokens",
       "reward",
       "timerStart",
@@ -177,10 +182,13 @@ export default {
   },
   methods: {
     closeModal() {
-      this.isVisible = false;
+      this.isPopupVisible = false;
+    },
+    closeNotification() {
+      this.isNotificationVisible = false;
     },
     showModal() {
-      this.isVisible = true;
+      this.isPopupVisible = true;
     },
     redirectToContract(url) {
       const redirectWindow = window.open(url, "_blank");

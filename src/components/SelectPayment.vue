@@ -42,18 +42,13 @@ import { mapActions } from "vuex";
 export default {
   name: "SelectPayment",
   components: { ButtonItem },
-  data: function () {
-    return {
-      show: false,
-    };
-  },
   methods: {
     ...mapActions(["connect"]),
     closePopup() {
       this.$emit("closePopup");
     },
     async connectWithMetamask() {
-      await this.$store.dispatch("connect", 1);
+      await this.$store.dispatch("connect");
       this.closePopup();
     },
     async connectWithWalletconnect() {
@@ -74,10 +69,9 @@ export default {
     },
   },
   mounted() {
-    let vm = this;
     document.addEventListener("click", function (item) {
-      if (item.target === vm.$refs["popup-wrapper"]) {
-        vm.closePopup();
+      if (item.target === this.$refs["popup-wrapper"]) {
+        this.closePopup();
       }
     });
   },

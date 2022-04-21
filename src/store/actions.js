@@ -4,27 +4,15 @@ import { tokenABI, tokenAddress } from "../utils/token";
 import { toRaw } from "vue";
 
 export default {
-  async connect({ dispatch }, connect) {
+  async connect({ dispatch }) {
     try {
       const { ethereum } = window;
       if (!ethereum) {
         return;
       }
-      if (!(await dispatch("checkIfConnected")) && connect) {
-        await dispatch("requestAccess");
-      }
+      await dispatch("requestAccess");
     } catch (error) {
       console.log(error);
-    }
-  },
-  async checkIfConnected({ commit }) {
-    const { ethereum } = window;
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-    if (accounts.length !== 0) {
-      commit("setAccount", accounts[0]);
-      return 1;
-    } else {
-      return 0;
     }
   },
   async requestAccess({ commit, dispatch }) {
