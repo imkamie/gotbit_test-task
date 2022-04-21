@@ -87,10 +87,7 @@
             text="Stake"
             @click="stake"
           />
-          <CountDownTimer
-            v-if="isStaked && !timerExpired"
-            :duration="864000"
-          />
+          <CountDownTimer v-if="isStaked && !timerExpired" :duration="864000" />
           <ButtonItem
             v-else-if="isStaked && timerExpired"
             :yellow="true"
@@ -122,7 +119,10 @@
       </div>
     </div>
   </div>
-  <TransactionNotification v-if="isUnStaked && isNotificationVisible" @closeNotification="closeNotification" />
+  <TransactionNotification
+    v-if="isUnStaked && isNotificationVisible"
+    @closeNotification="closeNotification"
+  />
   <SelectPayment v-if="isPopupVisible" @closePopup="closeModal" />
 </template>
 
@@ -133,7 +133,7 @@ import ButtonItem from "./ButtonItem.vue";
 import SelectPayment from "./SelectPayment.vue";
 import TokenInput from "./TokenInput.vue";
 import TokenStaking from "./TokenStaking.vue";
-import { redirectAddress } from "../utils/constants";
+import { redirectContractAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 import CountDownTimer from "./CountDownTimer.vue";
 import TransactionNotification from "./TransactionNotification.vue";
@@ -154,7 +154,7 @@ export default {
     return {
       isPopupVisible: false,
       isNotificationVisible: false,
-      contractLink: redirectAddress,
+      contractLink: redirectContractAddress,
     };
   },
   mutations: {
@@ -207,6 +207,7 @@ export default {
     },
     async unStake() {
       await this.$store.dispatch("unStakeTokens");
+      this.isNotificationVisible = true;
     },
   },
 };

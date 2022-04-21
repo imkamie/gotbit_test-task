@@ -107,7 +107,9 @@ export default {
     const connectedContract = await dispatch("getStakingContract");
     await connectedContract.myStakes(state.account).then((result) => {
       const idOfLastStaking = result.indexes[result.indexes.length - 1]._hex;
-      connectedContract.unstake(idOfLastStaking);
+      connectedContract.unstake(idOfLastStaking).then((log) => {
+        commit("setTransactionHash", log.hash);
+      });
       commit("setUnStaked");
     });
   },

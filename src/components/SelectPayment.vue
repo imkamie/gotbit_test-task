@@ -69,9 +69,10 @@ export default {
     },
   },
   mounted() {
+    let vm = this;
     document.addEventListener("click", function (item) {
-      if (item.target === this.$refs["popup-wrapper"]) {
-        this.closePopup();
+      if (item.target === vm.$refs["popup-wrapper"]) {
+        vm.closePopup();
       }
     });
   },

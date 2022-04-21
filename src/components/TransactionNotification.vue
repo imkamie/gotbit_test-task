@@ -1,6 +1,8 @@
 <template>
   <div class="notification" ref="notification">
-    <span class="notification-text">Transaction confirmed!</span>
+    <a class="notification-link" @click="redirectToTransaction()"
+      >Transaction confirmed! Click here to see it</a
+    >
     <button class="btn-close-notification" @click="closeNotification">
       <img src="src/assets/close-notification.svg" alt="Close button" />
     </button>
@@ -9,21 +11,29 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { redirectTransactionAddress } from "../utils/constants";
 
 export default {
   name: "TransactionNotification.vue",
   computed: {
-    ...mapGetters(["isUnStaked"]),
+    ...mapGetters(["isUnStaked", "transactionHash"]),
   },
   methods: {
     closeNotification() {
       this.$emit("closeNotification");
     },
+    redirectToTransaction() {
+      const url =
+        redirectTransactionAddress + this.$store.getters.transactionHash;
+      const redirectWindow = window.open(url, "_blank");
+      redirectWindow.location;
+    },
   },
   mounted() {
+    let vm = this;
     document.addEventListener("click", function (item) {
-      if (item.target === this.$refs["notification"]) {
-        this.closeNotification();
+      if (item.target === vm.$refs["notification"]) {
+        vm.closeNotification();
       }
     });
   },
@@ -40,7 +50,7 @@ export default {
   border-radius: 20px;
   z-index: 1;
 }
-.notification-text {
+.notification-link {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -48,6 +58,9 @@ export default {
   line-height: 28px;
   letter-spacing: 0.02em;
   color: #ffffff;
+}
+.notification-link:hover {
+  cursor: pointer;
 }
 .btn-close-notification {
   padding: 0;

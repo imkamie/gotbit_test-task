@@ -47,4 +47,7 @@ export default {
   timerExpired(state) {
     return state.timerExpired;
   },
+  transactionHash(state) {
+    return state.transactionHash;
+  },
 };

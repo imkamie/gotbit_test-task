@@ -1,5 +1,6 @@
-const redirectAddress =
+const redirectContractAddress =
   "https://testnet.bscscan.com/address/0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
+const redirectTransactionAddress = "https://testnet.bscscan.com/tx/";
 const timeOptions = {
   day: "numeric",
   month: "short",
@@ -625,4 +626,10 @@ const stakingABI = [
   },
 ];
 
-export { redirectAddress, timeOptions, stakingAddress, stakingABI };
+export {
+  redirectContractAddress,
+  redirectTransactionAddress,
+  timeOptions,
+  stakingAddress,
+  stakingABI,
+};

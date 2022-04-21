@@ -24,6 +24,7 @@ export const store = createStore({
       timerStart: null,
       timerFinish: null,
       timerExpired: false,
+      transactionHash: null,
     };
   },
   getters,
