@@ -22,7 +22,7 @@
           <div class="btn-wrapper">
             <ButtonItem
               text="Walletconnect"
-              @click="connectWithWalletconnect"
+              @click="connectWithWalletConnect"
               :white="true"
               :icon="true"
               :path="`/src/assets/walletconnect.svg`"
@@ -36,35 +36,22 @@
 
 <script>
 import ButtonItem from "./ButtonItem.vue";
-import { clickConnectWalletConnect, connector } from "../utils/connectWallet";
 import { mapActions } from "vuex";
 
 export default {
   name: "SelectPayment",
   components: { ButtonItem },
   methods: {
-    ...mapActions(["connect"]),
+    ...mapActions(["connectMetamask", "connectWalletConnect"]),
     closePopup() {
       this.$emit("closePopup");
     },
     async connectWithMetamask() {
-      await this.$store.dispatch("connect");
+      await this.$store.dispatch("connectMetamask");
       this.closePopup();
     },
-    async connectWithWalletconnect() {
-      clickConnectWalletConnect();
-      await connector.createSession();
-      connector.on("connect", (error, payload) => {
-        if (error) {
-          throw error;
-        }
-
-        const { params } = payload;
-        const { accounts } = params[0];
-
-        this.isConnected = true;
-        this.address = accounts[0];
-      });
+    async connectWithWalletConnect() {
+      await this.$store.dispatch("connectWalletConnect");
       this.closePopup();
     },
   },

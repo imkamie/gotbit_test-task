@@ -2,9 +2,11 @@ import { ethers } from "ethers";
 import { stakingAddress, stakingABI } from "../utils/constants";
 import { tokenABI, tokenAddress } from "../utils/token";
 import { toRaw } from "vue";
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 
 export default {
-  async connect({ dispatch }) {
+  async connectMetamask({ dispatch }) {
     try {
       const { ethereum } = window;
       if (!ethereum) {
@@ -14,6 +16,28 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+  async connectWalletConnect({ commit }) {
+    const connector = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org", // Required
+      qrcodeModal: QRCodeModal,
+    });
+
+    if (!connector.connected) {
+      await connector.createSession();
+    }
+
+    connector.on("connect", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      const { params } = payload;
+      const { accounts } = params[0];
+
+      commit("setAccount", accounts[0]);
+      commit("setConnected");
+    });
   },
   async requestAccess({ commit, dispatch }) {
     const { ethereum } = window;
