@@ -2,8 +2,8 @@ export default {
   setConnected(state) {
     state.isConnected = true;
   },
-  setApproved(state) {
-    state.isApproved = true;
+  setApproved(state, value) {
+    state.isApproved = value;
   },
   setAccount(state, account) {
     state.account = account;

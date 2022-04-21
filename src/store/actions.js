@@ -60,7 +60,6 @@ export default {
       });
     }
     commit("setStakeInfo", stakeInfo);
-
     commit("setAccount", accounts[0]);
     commit("setConnected");
   },
@@ -91,15 +90,30 @@ export default {
   async approveWallet({ commit, dispatch, state }) {
     try {
       const connectedContract = await dispatch("getTokenContract");
-      await connectedContract.approve(stakingAddress, 0);
+      const totalSupply = connectedContract.totalSupply();
+      const isApproved = await connectedContract.approve(
+        stakingAddress,
+        totalSupply
+      );
       await connectedContract.balanceOf(state.account).then((result) => {
         let tokenBalance = ethers.utils.formatEther(result._hex) / 1;
         commit("setTokenBalance", tokenBalance);
       });
-      commit("setApproved");
+      commit("setApproved", isApproved);
     } catch (error) {
       console.log(error);
       return null;
     }
+  },
+  async stake({ commit, dispatch, state }) {
+    const connectedContract = await dispatch("getStakingContract");
+    const indexOfPickedStake = state.stakeInfo.findIndex(
+      (picked) => picked.periods === state.pickedStake
+    );
+    await connectedContract.stake(
+      indexOfPickedStake,
+      BigInt(state.stakingTokens).toString(16)
+    );
+    commit("setStaked");
   },
 };

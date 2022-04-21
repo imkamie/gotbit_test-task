@@ -191,9 +191,9 @@ export default {
     updateStake(value) {
       this.$store.commit("setPickedStake", value);
     },
-    stake() {
+    async stake() {
       if (this.$store.getters.stakingTokens) {
-        this.$store.commit("setStaked");
+        await this.$store.dispatch("stake");
       }
     },
   },
