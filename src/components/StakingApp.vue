@@ -89,7 +89,7 @@
           />
           <CountDownTimer
             v-if="isStaked && !timerExpired"
-            :duration="pickedStake.periods"
+            :duration="864000"
           />
           <ButtonItem
             v-else-if="isStaked && timerExpired"
@@ -108,6 +108,7 @@
             v-else-if="isStaked && timerExpired"
             :white="true"
             text="Unstake"
+            @click="unStake"
           />
         </div>
       </div>
@@ -193,8 +194,11 @@ export default {
     },
     async stake() {
       if (this.$store.getters.stakingTokens) {
-        await this.$store.dispatch("stake");
+        await this.$store.dispatch("stakeTokens");
       }
+    },
+    async unStake() {
+      await this.$store.dispatch("unStakeTokens");
     },
   },
 };

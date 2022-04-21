@@ -34,7 +34,6 @@ export default {
   },
   setUnStaked(state) {
     state.isUnStaked = true;
-    state.isStaked = false;
   },
   setStakingTokens(state, tokens) {
     state.stakingTokens = tokens;

@@ -1,4 +1,7 @@
-const tokenAddress = "0x275E113c3cd4f80133F99932aAaFaC4A4BA06524";
+// Real contract
+// const tokenAddress = "0x275E113c3cd4f80133F99932aAaFaC4A4BA06524";
+// For test
+const tokenAddress = "0xE1D54fD875150Efa32315aaa3957a4B5b3b07Dbe";
 const tokenABI = [
   {
     inputs: [

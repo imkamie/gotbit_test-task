@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { stakingAddress, stakingABI } from "../utils/constants";
 import { tokenABI, tokenAddress } from "../utils/token";
+import { toRaw } from "vue";
 
 export default {
   async connect({ dispatch }, connect) {
@@ -105,15 +106,21 @@ export default {
       return null;
     }
   },
-  async stake({ commit, dispatch, state }) {
+  async stakeTokens({ commit, dispatch, state }) {
     const connectedContract = await dispatch("getStakingContract");
     const indexOfPickedStake = state.stakeInfo.findIndex(
-      (picked) => picked.periods === state.pickedStake
+      (picked) => toRaw(picked).periods === state.pickedStake.periods
     );
-    await connectedContract.stake(
-      indexOfPickedStake,
-      BigInt(state.stakingTokens).toString(16)
-    );
+    await connectedContract.increaseRewardsPool(state.stakingTokens);
+    await connectedContract.stake(indexOfPickedStake, state.stakingTokens);
     commit("setStaked");
+  },
+  async unStakeTokens({ commit, dispatch, state }) {
+    const connectedContract = await dispatch("getStakingContract");
+    await connectedContract.myStakes(state.account).then((result) => {
+      const idOfLastStaking = result.indexes[result.indexes.length - 1]._hex;
+      connectedContract.unstake(idOfLastStaking);
+      commit("setUnStaked");
+    });
   },
 };
