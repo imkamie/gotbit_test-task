@@ -65,7 +65,7 @@ export default {
 <style scoped>
 .navbar {
   padding: 20px 0 14px;
-  border-bottom: #ffffff solid 1px;
+  border-bottom: var(--color-border-white) solid 1px;
   font-size: 16px;
   line-height: 22px;
   letter-spacing: -0.2875px;
@@ -97,7 +97,7 @@ export default {
   font-size: 16px;
   line-height: 22px;
   letter-spacing: -0.2875px;
-  color: #da554a;
+  color: var(--color-text-accent);
 }
 
 .staking::after {
@@ -106,7 +106,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: -26px;
-  border-bottom: #ed1c24 solid 4px;
+  border-bottom: var(--color-border-red) solid 4px;
 }
 
 .user-info {
@@ -115,7 +115,7 @@ export default {
   align-items: center;
   height: 48px;
   padding: 8px;
-  background: #ffffff;
+  background: var(--color-background-white);
   border-radius: 12px;
 }
 
@@ -124,7 +124,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 7px 8px;
-  background: rgba(255, 212, 44, 0.2);
+  background: var(--color-background-primary-light);
   border-radius: 8px;
 }
 
@@ -134,7 +134,7 @@ export default {
   font-size: 14px;
   line-height: 18px;
   letter-spacing: -0.2875px;
-  color: #e2ad06;
+  color: var(--color-text-primary-dark);
 }
 
 .user-address_copy {
@@ -155,7 +155,7 @@ export default {
   font-size: 14px;
   line-height: 18px;
   letter-spacing: -0.2875px;
-  color: #343840;
+  color: var(--color-text-secondary);
 }
 
 .user-balance:after {

@@ -44,8 +44,8 @@ export default {
 
 <style scoped>
 .card {
-  background: #ffffff;
-  border: 1px solid #dfebf5;
+  background: var(--color-background-white);
+  border: 1px solid var(--color-border-default);
   box-sizing: border-box;
   border-radius: 24px;
   padding: 24px 28px 20px 28px;
@@ -58,13 +58,13 @@ export default {
 }
 
 [type="radio"]:checked + div {
-  background: #eff3f8;
+  background: var(--color-background-light-grey);
   box-shadow: none;
 }
 
 .card-radio {
-  background: #ffffff;
-  box-shadow: 0 16px 44px rgba(78, 102, 120, 0.1);
+  background: var(--color-background-white);
+  box-shadow: var(--color-box-shadow);
   border-radius: 24px;
   padding: 24px 28px 20px 28px;
   width: 330px;
@@ -79,7 +79,7 @@ export default {
   font-weight: 600;
   font-size: 36px;
   line-height: 40px;
-  color: #343840;
+  color: var(--color-text-secondary);
   margin-bottom: 8px;
 }
 
@@ -90,7 +90,7 @@ export default {
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.02em;
-  color: #da554a;
+  color: var(--color-text-accent);
   margin-bottom: 8px;
 }
 
@@ -125,7 +125,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #ffffff;
+  color: var(--color-text-white);
 
   display: flex;
   align-items: center;
@@ -141,6 +141,6 @@ export default {
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
-  color: #828a97;
+  color: var(--color-text-grey);
 }
 </style>

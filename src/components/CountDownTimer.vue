@@ -130,7 +130,7 @@ export default {
 .timer {
   width: 100%;
   padding: 18px 0;
-  background: #b7c6d8;
+  background: var(--color-background-grey);
   border-radius: 12px;
   text-align: center;
 }
@@ -140,6 +140,6 @@ export default {
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  color: #ffffff;
+  color: var(--color-text-white);
 }
 </style>

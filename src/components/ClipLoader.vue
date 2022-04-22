@@ -15,7 +15,7 @@ export default {
     },
     color: {
       type: String,
-      default: "#fff",
+      default: "var(--color-text-white)",
     },
     size: {
       type: String,

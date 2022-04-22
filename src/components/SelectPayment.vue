@@ -68,11 +68,7 @@ export default {
 
 <style scoped>
 .popup-wrapper {
-  background: linear-gradient(
-    71.52deg,
-    rgba(57, 91, 119, 0.3) 16.69%,
-    rgba(26, 36, 44, 0.3) 81.22%
-  );
+  background: var(--color-background-gradient);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,8 +84,8 @@ export default {
 .select-payment {
   width: 670px;
   height: 365px;
-  background: #ffffff;
-  box-shadow: 0 16px 44px rgba(78, 102, 120, 0.1);
+  background: var(--color-background-white);
+  box-shadow: var(--color-box-shadow);
   border-radius: 24px;
   z-index: 100;
 }
@@ -118,7 +114,7 @@ h4 {
   font-size: 24px;
   line-height: 32px;
   letter-spacing: 0.02em;
-  color: #000000;
+  color: var(--color-text-black);
 }
 
 .select-payment_info-wallet {
@@ -128,7 +124,7 @@ h4 {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #343840;
+  color: var(--color-text-secondary);
 }
 
 .buttons-container {

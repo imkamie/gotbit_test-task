@@ -16,7 +16,7 @@ defineProps({
 <style scoped>
 .info {
   padding: 25px;
-  background: #eff3f8;
+  background: var(--color-background-light-grey);
   border-radius: 16px;
 }
 
@@ -27,7 +27,7 @@ defineProps({
   font-size: 16px;
   line-height: 22px;
   letter-spacing: -0.2875px;
-  color: #828a97;
+  color: var(--color-text-grey);
   margin-left: 50px;
 }
 

@@ -25,7 +25,7 @@ export default {
 .token-staking {
   width: 100%;
   padding: 24px 28px;
-  background: #eff3f8;
+  background: var(--color-background-light-grey);
   border-radius: 12px;
 }
 
@@ -35,7 +35,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #828a97;
+  color: var(--color-text-grey);
 }
 
 .token-staking_info {
@@ -45,6 +45,6 @@ export default {
   font-size: 24px;
   line-height: 32px;
   letter-spacing: 0.02em;
-  color: #343840;
+  color: var(--color-text-secondary);
 }
 </style>

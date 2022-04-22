@@ -232,8 +232,8 @@ export default {
   max-height: 690px;
   margin-top: 133px;
   padding: 64px 56px;
-  background: #ffffff;
-  box-shadow: 0 16px 44px rgba(78, 102, 120, 0.1);
+  background: var(--color-background-white);
+  box-shadow: var(--color-box-shadow);
   border-radius: 24px;
 }
 
@@ -243,7 +243,7 @@ export default {
 }
 
 .approved {
-  background: #eff3f8;
+  background: var(--color-background-light-grey);
   border-radius: 16px;
   padding: 12px 52px 12px 16px;
   font-family: "Noto Sans", sans-serif;
@@ -251,7 +251,7 @@ export default {
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
-  color: #828a97;
+  color: var(--color-text-grey);
 }
 
 .approved:after {
@@ -268,7 +268,7 @@ h2 {
   font-size: 44px;
   line-height: 56px;
   letter-spacing: 0.06em;
-  color: #343840;
+  color: var(--color-text-secondary);
 }
 
 .token-cards {
@@ -287,8 +287,8 @@ h2 {
 .stake-info {
   margin-top: 90px;
   padding: 56px 64px 32px;
-  background: #ffffff;
-  border: 1px solid #dfebf5;
+  background: var(--color-background-white);
+  border: 1px solid var(--color-border-default);
   box-sizing: border-box;
   border-radius: 24px;
 }
@@ -307,7 +307,7 @@ h2 {
   font-size: 44px;
   line-height: 56px;
   letter-spacing: 0.06em;
-  color: #da554a;
+  color: var(--color-text-accent);
 }
 
 .tokens-earned {
@@ -318,7 +318,7 @@ h2 {
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.02em;
-  color: #b3b7bf;
+  color: var(--color-subtext-light);
 }
 
 .token-card-wrapper-date {

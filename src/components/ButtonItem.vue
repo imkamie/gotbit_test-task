@@ -74,8 +74,8 @@ export default {
 }
 
 .yellow {
-  background: #ffd42c;
-  color: #fff;
+  background: var(--color-background-primary);
+  color: var(--color-text-white);
 }
 
 .yellow div {
@@ -83,14 +83,14 @@ export default {
 }
 
 .white {
-  border: 1px solid #dfebf5;
-  background: #fff;
-  color: #343840;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-background-white);
+  color: var(--color-text-secondary);
 }
 
 .loading {
-  background: #e2ad06;
-  color: #fff;
+  background: var(--color-background-primary-dark);
+  color: var(--color-text-white);
 }
 
 .loading div {

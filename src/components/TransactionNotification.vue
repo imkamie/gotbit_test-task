@@ -46,7 +46,7 @@ export default {
   bottom: -154px;
   left: 414px;
   padding: 24px 28px;
-  background: rgba(69, 202, 114, 0.8);
+  background: var(--color-background-green);
   border-radius: 20px;
   z-index: 1;
 }
@@ -57,7 +57,7 @@ export default {
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: var(--color-text-white);
 }
 .notification-link:hover {
   cursor: pointer;

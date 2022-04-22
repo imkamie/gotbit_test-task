@@ -97,20 +97,20 @@ export default {
 .token-input {
   width: 100%;
   padding: 14px 16px;
-  background: #ffffff;
-  border: 1px solid #dfebf5;
+  background: var(--color-background-white);
+  border: 1px solid var(--color-border-default);
   box-sizing: border-box;
   border-radius: 8px;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
-  color: #343840;
+  color: var(--color-text-secondary);
   outline: none;
 }
 
 .error {
-  border: 1px solid #da554a;
+  border: 1px solid var(--color-border-error);
 }
 
 .input-button {
@@ -127,7 +127,7 @@ export default {
   font-size: 20px;
   line-height: 32px;
   text-align: right;
-  color: #ffd42c;
+  color: var(--color-background-primary);
 }
 
 .input-error {
@@ -138,7 +138,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #da554a;
+  color: var(--color-text-error);
 }
 
 .reward-count {
@@ -149,7 +149,7 @@ export default {
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.02em;
-  color: #343840;
+  color: var(--color-text-secondary);
 }
 
 .reward {
@@ -159,6 +159,6 @@ export default {
   font-size: 24px;
   line-height: 32px;
   letter-spacing: 0.02em;
-  color: #da554a;
+  color: var(--color-text-accent);
 }
 </style>
