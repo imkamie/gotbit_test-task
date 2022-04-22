@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { stakingAddress, stakingABI } from "../utils/constants";
+import { stakingAddress, stakingABI } from "../utils/staking";
 import { tokenABI, tokenAddress } from "../utils/token";
 import { toRaw } from "vue";
 import WalletConnect from "@walletconnect/client";

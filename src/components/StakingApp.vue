@@ -16,8 +16,8 @@
           @change="updateStake(value)"
           :value="value"
           amount="100 - 299"
-          :apy="(value.rates / 100).toFixed(2)"
-          :duration="value.periods / 86400"
+          :apy="(value.rates / toPercents).toFixed(2)"
+          :duration="value.periods / toMonth"
         />
       </li>
     </ul>
@@ -25,7 +25,7 @@
     <div v-if="isStaked">
       <div class="stake-info">
         <h2 class="tokens-earned-amount">
-          {{ Math.trunc(reward * 10000) / 10000 }}
+          {{ Math.trunc(reward * rewardRounding) / rewardRounding }}
         </h2>
         <div class="tokens-earned">TKN earned</div>
         <div class="token-cards-group">
@@ -43,7 +43,7 @@
           </div>
           <div class="token-card-wrapper-apy">
             <TokenStaking
-              :info="(pickedStake.rates / 100).toFixed(2) + '%'"
+              :info="(pickedStake.rates / toPercents).toFixed(2) + '%'"
               text="APY"
             />
           </div>
@@ -87,7 +87,10 @@
             text="Stake"
             @click="stake"
           />
-          <CountDownTimer v-if="isStaked && !timerExpired" :duration="864000" />
+          <CountDownTimer
+            v-if="isStaked && !timerExpired"
+            :duration="mockDuration"
+          />
           <ButtonItem
             v-else-if="isStaked && timerExpired"
             :yellow="true"
@@ -137,6 +140,12 @@ import { redirectContractAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 import CountDownTimer from "./CountDownTimer.vue";
 import TransactionNotification from "./TransactionNotification.vue";
+import {
+  mockDuration,
+  toMonth,
+  rewardRounding,
+  toPercents,
+} from "../utils/constants";
 
 export default {
   name: "stakingApp",
@@ -155,6 +164,10 @@ export default {
       isPopupVisible: false,
       isNotificationVisible: false,
       contractLink: redirectContractAddress,
+      mockDuration: mockDuration,
+      toMonth: toMonth,
+      rewardRounding: rewardRounding,
+      toPercents: toPercents,
     };
   },
   mutations: {

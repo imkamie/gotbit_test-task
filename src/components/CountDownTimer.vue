@@ -5,7 +5,13 @@
 </template>
 
 <script>
-import { timeOptions } from "../utils/constants";
+import {
+  timeOptions,
+  getMinutes,
+  toHours,
+  toMinutes,
+  toSeconds,
+} from "../utils/constants";
 
 export default {
   name: "CountDownTimer",
@@ -57,17 +63,17 @@ export default {
     // Function for testing and faster work
     formattedTimeLeft() {
       const timeLeft = this.timeLeft;
-      let hours = Math.floor(timeLeft / 3600);
+      let hours = Math.floor(timeLeft / toHours);
       if (hours < 10) {
         hours = `0${hours}`;
       }
-      let minutes = Math.floor(timeLeft / 60);
+      let minutes = Math.floor(timeLeft / toMinutes);
 
       if (minutes < 10) {
         minutes = `0${minutes}`;
       }
 
-      let seconds = Math.floor(timeLeft % 60);
+      let seconds = Math.floor(timeLeft % toSeconds);
 
       if (seconds < 10) {
         seconds = `0${seconds}`;
@@ -77,7 +83,7 @@ export default {
     },
     timeLeft() {
       // Divided the duration by 14400 to get 3 minutes out of 30 days, 6 minutes out of 60 days, etc.
-      return this.duration / 14400 - this.timePassed;
+      return this.duration / getMinutes - this.timePassed;
     },
   },
   watch: {
@@ -98,7 +104,9 @@ export default {
     // finish.setDate(finish.getDate() + 2592000/86400);
 
     // This code adds only minutes
-    const finish = new Date(start.getTime() + (this.duration / 14400) * 1000);
+    const finish = new Date(
+      start.getTime() + (this.duration / getMinutes) * 1000
+    );
     this.$store.commit(
       "setTimerFinish",
       finish.toLocaleString("en-US", timeOptions)

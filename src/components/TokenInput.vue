@@ -21,6 +21,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { toMonth, year, apyDivider, rewardRounding } from "../utils/constants";
 
 export default {
   name: "TokenInput",
@@ -80,13 +81,13 @@ export default {
 
       const reward =
         (Number(input) * this.pickedStake.rates * this.pickedStake.periods) /
-        86400 /
-        10000 /
-        360;
+        toMonth /
+        apyDivider /
+        year;
 
       this.$store.commit("setReward", reward);
 
-      return Math.trunc(reward * 10000) / 10000 + " TKN";
+      return Math.trunc(reward * rewardRounding) / rewardRounding + " TKN";
     },
   },
 };

@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { stakingAddress } from "../utils/constants";
+import { stakingAddress } from "../utils/staking";
 import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
