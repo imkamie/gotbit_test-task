@@ -7,7 +7,7 @@
 <script>
 import {
   timeOptions,
-  getMinutes,
+  toMonth,
   toHours,
   toMinutes,
   toSeconds,
@@ -28,25 +28,22 @@ export default {
     },
   },
   computed: {
-    /*
-    Function for counting real time in stake. Use this in real project.
-
     formattedTimeLeft() {
       const timeLeft = this.timeLeft;
-      let days = Math.floor(timeLeft / 86400);
-      let hoursLeft = Math.floor(timeLeft - (days * 86400));
-      let hours = Math.floor(hoursLeft / 3600);
+      let days = Math.floor(timeLeft / toMonth);
+      let hoursLeft = Math.floor(timeLeft - days * toMonth);
+      let hours = Math.floor(hoursLeft / toHours);
       if (hours < 10) {
         hours = `0${hours}`;
       }
-      let minutesLeft = Math.floor(hoursLeft - hours * 3600);
-      let minutes = Math.floor(minutesLeft / 60);
+      let minutesLeft = Math.floor(hoursLeft - hours * toHours);
+      let minutes = Math.floor(minutesLeft / toMinutes);
 
       if (minutes < 10) {
         minutes = `0${minutes}`;
       }
 
-      let seconds = timeLeft % 60;
+      let seconds = timeLeft % toSeconds;
 
       if (seconds < 10) {
         seconds = `0${seconds}`;
@@ -58,32 +55,9 @@ export default {
 
       return `${days}:${hours}:${minutes}:${seconds}`;
     },
-    */
 
-    // Function for testing and faster work
-    formattedTimeLeft() {
-      const timeLeft = this.timeLeft;
-      let hours = Math.floor(timeLeft / toHours);
-      if (hours < 10) {
-        hours = `0${hours}`;
-      }
-      let minutes = Math.floor(timeLeft / toMinutes);
-
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-
-      let seconds = Math.floor(timeLeft % toSeconds);
-
-      if (seconds < 10) {
-        seconds = `0${seconds}`;
-      }
-
-      return `${hours}:${minutes}:${seconds}`;
-    },
     timeLeft() {
-      // Divided the duration by 14400 to get 3 minutes out of 30 days, 6 minutes out of 60 days, etc.
-      return this.duration / getMinutes - this.timePassed;
+      return this.duration - this.timePassed;
     },
   },
   watch: {
@@ -99,14 +73,10 @@ export default {
       "setTimerStart",
       start.toLocaleString("en-US", timeOptions)
     );
-    // To find actual finish time code should be:
-    // const finish = new Date();
-    // finish.setDate(finish.getDate() + 2592000/86400);
 
-    // This code adds only minutes
-    const finish = new Date(
-      start.getTime() + (this.duration / getMinutes) * 1000
-    );
+    const finish = new Date();
+    finish.setDate(finish.getDate() + this.duration / toMonth);
+
     this.$store.commit(
       "setTimerFinish",
       finish.toLocaleString("en-US", timeOptions)

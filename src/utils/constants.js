@@ -8,11 +8,10 @@ const timeOptions = {
   hour: "2-digit",
   minute: "2-digit",
 };
-const mockDuration = 864000;
 const toMonth = 86400;
 const toHours = 3600;
-const toMinutes = 3600;
-const toSeconds = 3600;
+const toMinutes = 60;
+const toSeconds = 60;
 const year = 360;
 const apyDivider = 10000;
 const rewardRounding = 10000;
@@ -23,7 +22,6 @@ export {
   redirectContractAddress,
   redirectTransactionAddress,
   timeOptions,
-  mockDuration,
   toMonth,
   toHours,
   toMinutes,

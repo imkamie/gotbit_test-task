@@ -1,8 +1,4 @@
-// Real contract
-// const stakingAddress = "0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
-
-// For test
-const stakingAddress = "0x63D232769573970a2B6f1042D8Cd800F8c220eb7";
+const stakingAddress = "0x3514E8A6Ca64B6861B7054bbFb5A5ea75392eb9C";
 const stakingABI = [
   {
     inputs: [

@@ -89,7 +89,7 @@
           />
           <CountDownTimer
             v-if="isStaked && !timerExpired"
-            :duration="mockDuration"
+            :duration="pickedStake.periods"
           />
           <ButtonItem
             v-else-if="isStaked && timerExpired"
@@ -140,12 +140,7 @@ import { redirectContractAddress } from "../utils/constants";
 import { mapGetters } from "vuex";
 import CountDownTimer from "./CountDownTimer.vue";
 import TransactionNotification from "./TransactionNotification.vue";
-import {
-  mockDuration,
-  toMonth,
-  rewardRounding,
-  toPercents,
-} from "../utils/constants";
+import { toMonth, rewardRounding, toPercents } from "../utils/constants";
 
 export default {
   name: "stakingApp",
@@ -164,7 +159,6 @@ export default {
       isPopupVisible: false,
       isNotificationVisible: false,
       contractLink: redirectContractAddress,
-      mockDuration: mockDuration,
       toMonth: toMonth,
       rewardRounding: rewardRounding,
       toPercents: toPercents,
