@@ -15,7 +15,6 @@ const toSeconds = 60;
 const year = 360;
 const apyDivider = 10000;
 const rewardRounding = 10000;
-const getMinutes = 14400;
 const toPercents = 100;
 
 export {
@@ -29,6 +28,5 @@ export {
   year,
   apyDivider,
   rewardRounding,
-  getMinutes,
   toPercents,
 };
